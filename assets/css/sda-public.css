@@ -1,0 +1,198 @@
+/* SDA Token Ledger — Public / Frontend Styles */
+
+:root {
+    --sda-green:   #3F7E44;
+    --sda-blue:    #0A97D9;
+    --sda-gold:    #DDA63A;
+    --sda-teal:    #26BDE2;
+    --sda-navy:    #19486A;
+    --sda-border:  #dde1e6;
+    --sda-radius:  8px;
+}
+
+/* ---- Ledger wrap ---- */
+.sda-ledger-wrap { font-family: inherit; }
+
+/* Summary row (totals) */
+.sda-summary-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.sda-summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid var(--sda-border);
+    border-radius: var(--sda-radius);
+    padding: 16px 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+
+.sda-card-blue  { border-top: 4px solid var(--sda-blue); }
+.sda-card-teal  { border-top: 4px solid var(--sda-teal); }
+.sda-card-green { border-top: 4px solid var(--sda-green); }
+
+.sda-card-label { font-size: 12px; color: #777; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; }
+.sda-card-value { font-size: 26px; font-weight: 700; color: var(--sda-navy); font-variant-numeric: tabular-nums; }
+
+/* Table */
+.sda-table-wrap { overflow-x: auto; }
+
+.sda-ledger-table,
+.sda-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: #fff;
+    border-radius: var(--sda-radius);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,.07);
+}
+
+.sda-ledger-table th,
+.sda-table th {
+    background: #f0f3f7;
+    color: var(--sda-navy);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: 10px 12px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 2px solid var(--sda-border);
+}
+
+.sda-ledger-table td,
+.sda-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #eef0f3;
+    vertical-align: middle;
+}
+
+.sda-ledger-table tr:last-child td,
+.sda-table tr:last-child td { border-bottom: none; }
+
+.sda-ledger-table tr:hover td,
+.sda-table tr:hover td { background: #fafbfc; }
+
+/* Type badges */
+.sda-type-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+}
+.sda-type-sda { background: #e8f5e9; color: #2e7d32; }
+.sda-type-sdr { background: #fff3e0; color: #e65100; }
+
+/* Status pills */
+.sda-status-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.sda-status-pill-pending   { background: #fff9c4; color: #7a6000; }
+.sda-status-pill-sidechain { background: #e3f2fd; color: #0d47a1; }
+.sda-status-pill-verified  { background: #e8f5e9; color: #1b5e20; }
+.sda-status-pill-converted { background: #f3e5f5; color: #4a148c; }
+.sda-status-pill-rejected  { background: #ffebee; color: #b71c1c; }
+
+/* SDG badge */
+.sda-sdg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    margin: 1px;
+}
+
+/* BID / chain */
+.sda-bid { font-size: 12px; }
+.sda-address { font-size: 12px; color: #555; word-break: break-all; background: #f5f5f5; padding: 1px 4px; border-radius: 3px; }
+.sda-chain-badge { font-size: 10px; padding: 1px 6px; border-radius: 4px; background: #e3f2fd; color: #1565c0; font-weight: 600; margin-left: 4px; }
+.sda-pid  { font-family: monospace; font-size: 13px; }
+.sda-muted { color: #aaa; }
+.sda-amount { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Totals widget */
+.sda-totals-widget {
+    background: #fff;
+    border: 1px solid var(--sda-border);
+    border-radius: var(--sda-radius);
+    padding: 18px 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    max-width: 480px;
+}
+
+.sda-totals-widget h3 { margin: 0 0 14px; color: var(--sda-navy); font-size: 16px; }
+
+.sda-totals-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.sda-totals-table td { padding: 8px 0; border-bottom: 1px solid #eee; }
+.sda-totals-table tr:last-child td { border-bottom: none; }
+.sda-totals-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.sda-totals-table .sda-highlight td { color: var(--sda-green); font-weight: 700; background: #f0fdf4; padding: 8px 6px; border-radius: 4px; }
+
+.sda-coin-eligible {
+    background: linear-gradient(135deg, #fff3e0, #fff9c4);
+    border: 1px solid #f5a623;
+    border-radius: var(--sda-radius);
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 12px;
+    color: #7a4a00;
+}
+
+/* Projects */
+.sda-projects-wrap { overflow-x: auto; }
+
+/* SDG Goal Grid (public) */
+.sda-sdg-grid-public {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+}
+
+.sda-sdg-card {
+    background: #fff;
+    border: 1px solid var(--sda-border);
+    border-radius: var(--sda-radius);
+    padding: 14px 12px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    transition: transform .15s, box-shadow .15s;
+}
+
+.sda-sdg-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,.1); }
+.sda-sdg-inactive { opacity: .5; filter: grayscale(.6); }
+
+.sda-sdg-number { font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+.sda-sdg-icon   { font-size: 22px; margin-bottom: 6px; }
+.sda-sdg-name   { font-size: 12px; font-weight: 700; color: #333; margin-bottom: 4px; line-height: 1.3; }
+.sda-sdg-desc   { font-size: 11px; color: #666; line-height: 1.4; margin-bottom: 8px; }
+
+.sda-sdg-badge-eligible { display: inline-block; padding: 2px 8px; border-radius: 100px; background: #e8f5e9; color: #2e7d32; font-size: 11px; font-weight: 700; }
+.sda-sdg-badge-inactive { display: inline-block; padding: 2px 8px; border-radius: 100px; background: #f5f5f5; color: #999; font-size: 11px; font-weight: 600; }
+
+/* Notice */
+.sda-notice { background: #f0f6fc; border-left: 4px solid var(--sda-blue); padding: 12px 16px; border-radius: 0 4px 4px 0; font-size: 14px; }
+
+/* Responsive */
+@media (max-width: 600px) {
+    .sda-summary-row { grid-template-columns: 1fr 1fr; }
+    .sda-sdg-grid-public { grid-template-columns: repeat(3, 1fr); }
+    .sda-ledger-table { font-size: 12px; }
+    .sda-ledger-table th, .sda-ledger-table td { padding: 7px 8px; }
+}

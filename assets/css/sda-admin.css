@@ -1,0 +1,270 @@
+/* SDA Token Ledger — Admin Styles */
+
+:root {
+    --sda-green:   #3F7E44;
+    --sda-blue:    #0A97D9;
+    --sda-gold:    #DDA63A;
+    --sda-teal:    #26BDE2;
+    --sda-red:     #E5243B;
+    --sda-navy:    #19486A;
+    --sda-bg:      #f6f8fa;
+    --sda-border:  #dde1e6;
+    --sda-radius:  6px;
+}
+
+/* Page wrapper */
+.sda-admin-wrap { max-width: 1400px; }
+
+.sda-page-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px !important;
+    color: var(--sda-navy) !important;
+    margin-bottom: 20px !important;
+    border-bottom: 3px solid var(--sda-green);
+    padding-bottom: 10px;
+}
+
+/* Panels */
+.sda-panel {
+    background: #fff;
+    border: 1px solid var(--sda-border);
+    border-radius: var(--sda-radius);
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+
+.sda-panel h2 {
+    margin-top: 0;
+    color: var(--sda-navy);
+    font-size: 16px;
+    border-bottom: 1px solid var(--sda-border);
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+}
+
+.sda-panel-info { background: #f0f8ff; border-color: var(--sda-blue); }
+
+/* KPI Cards */
+.sda-kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.sda-kpi-card {
+    background: #fff;
+    border-radius: var(--sda-radius);
+    border: 1px solid var(--sda-border);
+    border-top: 4px solid var(--sda-green);
+    padding: 18px 20px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+
+.sda-kpi-icon   { font-size: 28px; margin-bottom: 8px; }
+.sda-kpi-value  { font-size: 28px; font-weight: 700; color: var(--sda-navy); line-height: 1.2; }
+.sda-kpi-label  { font-size: 12px; color: #666; margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+
+/* Form Grid */
+.sda-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.sda-form-field { display: flex; flex-direction: column; gap: 4px; }
+.sda-form-field label { font-weight: 600; font-size: 13px; color: #333; }
+.sda-form-field .description { font-size: 11px; color: #777; margin: 2px 0 0; }
+.sda-form-full { grid-column: 1 / -1; }
+.required { color: var(--sda-red); }
+
+/* Tables */
+.sda-table th { background: #f0f3f7 !important; color: var(--sda-navy) !important; font-size: 12px; text-transform: uppercase; letter-spacing: .4px; }
+.sda-amount { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Type badges */
+.sda-type-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .5px;
+}
+.sda-type-sda { background: #e8f5e9; color: #2e7d32; }
+.sda-type-sdr { background: #fff3e0; color: #e65100; }
+
+/* Status pills */
+.sda-status-pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.sda-status-pill-pending    { background: #fff9c4; color: #7a6000; }
+.sda-status-pill-sidechain  { background: #e3f2fd; color: #0d47a1; }
+.sda-status-pill-verified   { background: #e8f5e9; color: #1b5e20; }
+.sda-status-pill-converted  { background: #f3e5f5; color: #4a148c; }
+.sda-status-pill-rejected   { background: #ffebee; color: #b71c1c; }
+.sda-status-pill-pending    { background: #fff9c4; color: #7a6000; }
+.sda-status-pill-signed     { background: #e8f5e9; color: #1b5e20; }
+
+/* Chain badge */
+.sda-chain-badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: #eee;
+    color: #555;
+    font-weight: 600;
+}
+.sda-chain-badge.mainchain { background: #e8f5e9; color: #2e7d32; }
+.sda-chain-badge.sidechain { background: #e3f2fd; color: #1565c0; }
+
+/* Address / code */
+.sda-address { font-size: 11px; color: #555; word-break: break-all; }
+
+/* SDG Grid (settings) */
+.sda-sdg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.sda-sdg-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1.4;
+    border-left: 4px solid #ccc;
+    transition: background .15s;
+}
+.sda-sdg-check:hover { background: #f0f3f7; }
+.sda-sdg-check input { margin-top: 2px; flex-shrink: 0; }
+
+/* SDG check wrap in forms */
+.sda-sdg-check-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.sda-sdg-inline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background .15s;
+}
+.sda-sdg-inline:hover { background: #eef2f7; }
+
+/* Info table */
+.sda-info-table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+.sda-info-table th, .sda-info-table td { border: 1px solid var(--sda-border); padding: 8px 12px; font-size: 13px; text-align: left; }
+.sda-info-table th { background: #f0f3f7; font-weight: 600; width: 160px; }
+
+/* Filter bar */
+.sda-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: #fff;
+    border: 1px solid var(--sda-border);
+    border-radius: var(--sda-radius);
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+.sda-filter-bar label { font-size: 13px; display: flex; align-items: center; gap: 6px; }
+.sda-record-count { margin-left: auto; color: #666; font-size: 12px; }
+
+/* Pagination */
+.sda-pagination { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 16px; }
+
+/* Utility */
+.sda-muted    { color: #aaa; }
+.sda-approved { color: var(--sda-green); font-weight: 600; }
+.sda-pending  { color: var(--sda-gold); font-weight: 600; }
+.sda-saved-indicator { color: var(--sda-green); font-size: 12px; margin-left: 6px; }
+
+/* Pioneer panel */
+.sda-pioneer-panel { border-left: 4px solid var(--sda-blue); background: #f0f9ff; }
+
+/* ---- Setup page ---- */
+.sda-setup-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.sda-setup-link-card {
+    background: #f9fafb;
+    border: 1px solid var(--sda-border);
+    border-radius: var(--sda-radius);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sda-setup-link-title {
+    font-weight: 700;
+    color: var(--sda-navy);
+    font-size: 14px;
+}
+
+.sda-setup-link-code {
+    font-size: 12px;
+    color: #555;
+}
+
+.sda-setup-link-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+/* ---- Version tag ---- */
+.sda-version-tag {
+    display: inline-block;
+    font-size: 11px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-weight: 700;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* SDG badges inline */
+.sda-sdg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    margin: 2px 2px;
+}
