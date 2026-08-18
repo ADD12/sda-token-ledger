@@ -27,6 +27,8 @@ class SDA_Admin {
         add_action( 'admin_post_sda_xero_disconnect',  array( __CLASS__, 'handle_xero_disconnect' ) );
         add_action( 'admin_post_sda_xero_backfill',         array( __CLASS__, 'handle_xero_backfill' ) );
         add_action( 'admin_post_sda_xero_retry_failures',   array( __CLASS__, 'handle_xero_retry_failures' ) );
+        add_action( 'admin_post_sda_xero_test',             array( __CLASS__, 'handle_xero_test' ) );
+        add_action( 'admin_post_sda_grant_genesis',         array( __CLASS__, 'handle_grant_genesis' ) );
     }
 
     // ---------------------------------------------------------------- Menus
@@ -103,6 +105,15 @@ class SDA_Admin {
             'manage_options',
             'sda-setup',
             array( __CLASS__, 'page_setup' )
+        );
+
+        add_submenu_page(
+            'sda-token-ledger',
+            __( 'Genesis Grants', 'sda-token-ledger' ),
+            __( '🎁 Genesis Grants', 'sda-token-ledger' ),
+            'manage_options',
+            'sda-genesis',
+            array( __CLASS__, 'page_genesis' )
         );
 
         // Dynamic submenu links to front-end pages (added after setup)
@@ -246,6 +257,14 @@ class SDA_Admin {
         add_settings_section( 'sda_sdg', __( 'Active UN Sustainability Goals', 'sda-token-ledger' ), array( __CLASS__, 'section_sdg_description' ), 'sda-settings' );
         add_settings_field( 'active_sdgs', __( 'Enabled SDGs', 'sda-token-ledger' ), array( __CLASS__, 'field_sdg_checkboxes' ), 'sda-settings', 'sda_sdg', array( 'key' => 'active_sdgs' ) );
 
+        // Section: Genesis Bonus
+        add_settings_section( 'sda_genesis', __( '🎁 Genesis Bonus (101DAO SDA Genesis Server)', 'sda-token-ledger' ), array( __CLASS__, 'section_genesis_description' ), 'sda-settings' );
+
+        add_settings_field( 'genesis_code',   __( 'Genesis Invite Code', 'sda-token-ledger' ),        array( __CLASS__, 'field_password' ), 'sda-settings', 'sda_genesis', array( 'key' => 'genesis_code' ) );
+        add_settings_field( 'genesis_amount', __( 'Bonus Amount (SDA per new account)', 'sda-token-ledger' ), array( __CLASS__, 'field_number' ),   'sda-settings', 'sda_genesis', array( 'key' => 'genesis_amount', 'min' => 1, 'default' => SDA_Genesis::DEFAULT_AMOUNT ) );
+        add_settings_field( 'genesis_pid',    __( 'Genesis Project ID (PID)', 'sda-token-ledger' ),   array( __CLASS__, 'field_text' ),     'sda-settings', 'sda_genesis', array( 'key' => 'genesis_pid',    'placeholder' => SDA_Genesis::DEFAULT_PID ) );
+        add_settings_field( 'genesis_bid',    __( 'Genesis BID / Chain ID', 'sda-token-ledger' ),     array( __CLASS__, 'field_text' ),     'sda-settings', 'sda_genesis', array( 'key' => 'genesis_bid',    'placeholder' => SDA_Genesis::DEFAULT_BID ) );
+
         // Section: Xero
         add_settings_section( 'sda_xero', __( 'Xero Accounting Integration', 'sda-token-ledger' ), array( __CLASS__, 'section_xero_description' ), 'sda-settings' );
         add_settings_field( 'xero_client_id',     __( 'Xero Client ID', 'sda-token-ledger' ),       array( __CLASS__, 'field_text' ),     'sda-settings', 'sda_xero', array( 'key' => 'xero_client_id',     'placeholder' => 'From your Xero app' ) );
@@ -329,6 +348,15 @@ class SDA_Admin {
         echo '<p>' . esc_html__( 'Select which of the 17 UN Sustainable Development Goals are eligible for SDA → SDR conversion in your deployment. All are enabled by default.', 'sda-token-ledger' ) . '</p>';
     }
 
+    public static function section_genesis_description() {
+        echo '<p>' . esc_html__( 'Set a secret invite code and share it in the 101DAO SDA Genesis server (e.g. pin it in Discord). New WordPress accounts that enter the code receive the bonus SDA automatically — no admin action needed. Leave the code blank to disable the feature.', 'sda-token-ledger' ) . '</p>';
+        printf(
+            '<p><a href="%s" class="button">🎁 %s</a></p>',
+            esc_url( admin_url( 'admin.php?page=sda-genesis' ) ),
+            esc_html__( 'View Genesis Grants →', 'sda-token-ledger' )
+        );
+    }
+
     public static function section_xero_description() {
         $status = SDA_Xero::get_status();
 
@@ -349,6 +377,12 @@ class SDA_Admin {
         $settings_url = admin_url( 'admin.php?page=sda-settings' );
 
         if ( $status['connected'] ) {
+            // Test Connection
+            printf(
+                '<a href="%s" class="button button-primary">🔍 %s</a> &nbsp;',
+                esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=sda_xero_test' ), 'sda_xero_test' ) ),
+                esc_html__( 'Test Connection', 'sda-token-ledger' )
+            );
             // Disconnect
             printf(
                 '<a href="%s" class="button button-secondary" onclick="return confirm(\'%s\')">🔌 %s</a> &nbsp;',
@@ -380,9 +414,9 @@ class SDA_Admin {
 
     public static function sanitize_settings( $input ) {
         $clean       = array();
-        $text_fields = array( 'dao_address', 'network_name', 'rpc_main', 'rpc_side', 'token_symbol', 'sdr_symbol', 'xero_client_id', 'xero_tenant_id', 'xero_account_code', 'xero_currency' );
-        $pass_fields = array( 'api_key', 'xero_client_secret' );
-        $num_fields  = array( 'max_sdr_ratio', 'min_coin_proposal' );
+        $text_fields = array( 'dao_address', 'network_name', 'rpc_main', 'rpc_side', 'token_symbol', 'sdr_symbol', 'xero_client_id', 'xero_tenant_id', 'xero_account_code', 'xero_currency', 'genesis_pid', 'genesis_bid' );
+        $pass_fields = array( 'api_key', 'xero_client_secret', 'genesis_code' );
+        $num_fields  = array( 'max_sdr_ratio', 'min_coin_proposal', 'genesis_amount' );
 
         foreach ( $text_fields as $f ) {
             $clean[ $f ] = sanitize_text_field( isset( $input[ $f ] ) ? $input[ $f ] : '' );
@@ -413,10 +447,11 @@ class SDA_Admin {
     public static function page_dashboard() {
         global $wpdb;
 
-        $total_sda = $wpdb->get_var( "SELECT SUM(amount) FROM {$wpdb->prefix}sda_ledger WHERE token_type='SDA'" );
-        $total_sdr = $wpdb->get_var( "SELECT SUM(amount) FROM {$wpdb->prefix}sda_ledger WHERE token_type='SDR'" );
-        $projects  = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}sda_projects" );
-        $verified  = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}sda_contracts WHERE status='signed'" );
+        $total_sda     = $wpdb->get_var( "SELECT SUM(amount) FROM {$wpdb->prefix}sda_ledger WHERE token_type='SDA'" );
+        $total_sdr     = $wpdb->get_var( "SELECT SUM(amount) FROM {$wpdb->prefix}sda_ledger WHERE token_type='SDR'" );
+        $projects      = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}sda_projects" );
+        $verified      = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}sda_contracts WHERE status='signed'" );
+        $genesis_count = SDA_Genesis::count_granted();
 
         $recent = $wpdb->get_results(
             "SELECT l.*, u.display_name
@@ -500,6 +535,12 @@ class SDA_Admin {
         include SDA_PLUGIN_DIR . 'templates/admin-setup.php';
     }
 
+    public static function page_genesis() {
+        $genesis_count = SDA_Genesis::count_granted();
+        $grants        = SDA_Genesis::get_recent_grants( 100 );
+        include SDA_PLUGIN_DIR . 'templates/admin-genesis.php';
+    }
+
     // ---------------------------------------------------------------- One-Click Setup Handler
 
     public static function handle_one_click_setup() {
@@ -565,6 +606,38 @@ class SDA_Admin {
     }
 
     // ---------------------------------------------------------------- Form Handlers
+
+    public static function handle_grant_genesis() {
+        check_admin_referer( 'sda_grant_genesis' );
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( 'Insufficient permissions.' );
+        }
+
+        $user_id = absint( isset( $_POST['user_id'] ) ? $_POST['user_id'] : 0 );
+        if ( ! $user_id ) {
+            $error = urlencode( 'Error: No user selected.' );
+            wp_safe_redirect( admin_url( "admin.php?page=sda-genesis&sda_error=$error" ) );
+            exit;
+        }
+
+        if ( SDA_Genesis::has_been_awarded( $user_id ) ) {
+            $error = urlencode( 'This user has already received the genesis bonus.' );
+            wp_safe_redirect( admin_url( "admin.php?page=sda-genesis&sda_error=$error" ) );
+            exit;
+        }
+
+        $ledger_id = SDA_Genesis::award( $user_id, 'manual' );
+        if ( $ledger_id ) {
+            $user   = get_userdata( $user_id );
+            $name   = $user ? $user->display_name : "User #$user_id";
+            $notice = urlencode( "Genesis bonus awarded to $name. Ledger ID: $ledger_id." );
+            wp_safe_redirect( admin_url( "admin.php?page=sda-genesis&sda_notice=$notice" ) );
+        } else {
+            $error = urlencode( 'Error: Could not issue genesis bonus. Check the Genesis PID and BID are configured correctly.' );
+            wp_safe_redirect( admin_url( "admin.php?page=sda-genesis&sda_error=$error" ) );
+        }
+        exit;
+    }
 
     public static function handle_issue_sda() {
         check_admin_referer( 'sda_issue_sda' );
@@ -815,6 +888,27 @@ class SDA_Admin {
         }
 
         wp_safe_redirect( admin_url( 'admin.php?page=sda-settings&sda_notice=' . urlencode( $msg ) ) );
+        exit;
+    }
+
+    /**
+     * Test the Xero connection by fetching the connected organisation name.
+     */
+    public static function handle_xero_test() {
+        check_admin_referer( 'sda_xero_test' );
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( 'Insufficient permissions.' );
+        }
+
+        $result = SDA_Xero::test_connection();
+
+        if ( is_wp_error( $result ) ) {
+            $notice = urlencode( 'Xero connection test failed: ' . $result->get_error_message() );
+        } else {
+            $notice = urlencode( $result['message'] );
+        }
+
+        wp_safe_redirect( admin_url( 'admin.php?page=sda-settings&sda_notice=' . $notice ) );
         exit;
     }
 

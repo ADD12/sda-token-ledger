@@ -28,6 +28,11 @@
             <div class="sda-kpi-value"><?php echo esc_html( number_format( (int) $verified, 0 ) ); ?></div>
             <div class="sda-kpi-label">Verified Contracts</div>
         </div>
+        <div class="sda-kpi-card" style="border-top-color:#9B59B6">
+            <div class="sda-kpi-icon">🎁</div>
+            <div class="sda-kpi-value"><?php echo esc_html( number_format( (int) $genesis_count, 0 ) ); ?></div>
+            <div class="sda-kpi-label"><a href="<?php echo esc_url( admin_url( 'admin.php?page=sda-genesis' ) ); ?>" style="color:inherit;text-decoration:none">Genesis Members</a></div>
+        </div>
     </div>
 
     <!-- Quick Issue SDA Form -->

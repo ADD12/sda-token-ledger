@@ -37,6 +37,7 @@ require_once SDA_PLUGIN_DIR . 'includes/class-sda-sdgs.php';
 require_once SDA_PLUGIN_DIR . 'includes/class-sda-token.php';
 require_once SDA_PLUGIN_DIR . 'includes/class-sda-xero.php';
 require_once SDA_PLUGIN_DIR . 'includes/class-sda-api.php';
+require_once SDA_PLUGIN_DIR . 'includes/class-sda-genesis.php';
 require_once SDA_PLUGIN_DIR . 'admin/class-sda-admin.php';
 require_once SDA_PLUGIN_DIR . 'public/class-sda-shortcodes.php';
 
@@ -63,6 +64,7 @@ function sda_boot() {
     SDA_Admin::init();
     SDA_Shortcodes::init();
     SDA_API::init();
+    SDA_Genesis::init();
 
     // Xero: automatically post each SDA → SDR conversion as a Xero invoice.
     add_action( 'sda_converted_to_sdr', array( 'SDA_Xero', 'on_conversion' ), 10, 3 );
