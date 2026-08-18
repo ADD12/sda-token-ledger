@@ -136,7 +136,7 @@
 
     <!-- AngelSharks Pioneer -->
     <div class="sda-panel sda-pioneer-panel">
-        <h2>🦈 Pioneer Project: AngelSharks.net</h2>
+        <h2>🌊 Pioneer Project: AngelSharks.net</h2>
         <p><strong>First 101DAO Approved Project</strong> — 7.5 billion SDA tokens tracking <em>Proof of Production of Shellfish</em> to remove carbon from our oceans via natural biomineralisation.</p>
         <table class="sda-info-table">
             <tr><th>Token Supply</th><td>7,500,000,000 SDA</td></tr>
