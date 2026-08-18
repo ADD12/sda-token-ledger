@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <div class="wrap sda-admin-wrap">
-    <h1 class="sda-page-title">🌱 SDA Token Ledger — Dashboard</h1>
+    <h1 class="sda-page-title">🌱 SDA Token Ledger — Dashboard <span class="sda-version-badge">v<?php echo esc_html( SDA_VERSION ); ?></span></h1>
 
     <?php if ( ! empty( $_GET['sda_notice'] ) ) : ?>
         <div class="notice notice-success is-dismissible"><p><?php echo esc_html( urldecode( $_GET['sda_notice'] ) ); ?></p></div>
